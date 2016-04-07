@@ -1,9 +1,9 @@
 //
 //  main.m
-//  FormataCPF
+//  CIFormatCPFNumber Example
 //
-//  Created by Carlos Irano on 18/08/15.
-//  Copyright (c) 2015 Carlos Irano. All rights reserved.
+//  Created by Carlos Irano on 4/7/16.
+//  Copyright © 2016 Carlos Irano. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

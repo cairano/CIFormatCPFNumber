@@ -1,45 +1,28 @@
 //
-//  ViewController.m
+//  CIFormatCPFNumber.m
 //  FormataCPF
 //
-//  Created by Carlos Irano on 04/08/15.
-//  Copyright (c) 2015 Carlos Irano. All rights reserved.
+//  Created by Carlos Irano on 4/6/16.
+//  Copyright © 2016 Carlos Irano. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "CIFormatCPFNumber.h"
 
-@interface ViewController ()
+@implementation CIFormatCPFNumber
 
-@property (weak, nonatomic) IBOutlet UITextField *fieldCPF;
-@property (weak, nonatomic) IBOutlet UIButton *botao;
-
-@end
-
-@implementation ViewController
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-        
-    self.fieldCPF.delegate = self;
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    if (textField.text.length >= MAX_LENGTH && range.length == 0)
-    {
-        return NO;
++ (void)inTextField:(UITextField *)textField usingRange:(NSRange)range withString:(NSString *)string {
+    
+    // verify here if the character is a number
+    
+    // field maxlength
+    if (textField.text.length >= 14 && range.length == 0) {
+        return;
     }
     
-    // tempero secreto!
+    // secret sauce!
     NSString *textFieldWithString = [textField.text stringByReplacingCharactersInRange:range withString:string];
     
-    // apagando caracter
+    // while deleting
     if (range.length > 0) {
         switch ([self cleanString:textFieldWithString].length) {
             case 3:
@@ -53,17 +36,17 @@
         }
     }
     
-    // digitando caracter
+    // while typing
     else {
         
         switch ([self cleanString:textFieldWithString].length) {
-                // coloca ponto
+            // insert dot
             case 4:
             case 7:
                 [textField setText: [NSString stringWithFormat:@"%@%s", [textFieldWithString substringWithRange:NSMakeRange(0, textFieldWithString.length-1)], "."]];
                 break;
                 
-                // coloca traço
+            // insert dash
             case 10:
                 [textField setText: [NSString stringWithFormat:@"%@%s", [textFieldWithString substringWithRange:NSMakeRange(0, textFieldWithString.length-1)], "-"]];
                 break;
@@ -72,11 +55,9 @@
                 break;
         }
     }
-    
-    return YES;
 }
 
-- (NSString *)cleanString:(NSString *)texto {
++ (NSString *)cleanString:(NSString *)texto {
     
     NSString *newString = [[texto componentsSeparatedByCharactersInSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]]
                            componentsJoinedByString: @""];

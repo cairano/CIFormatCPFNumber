@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#define MAX_LENGTH 14
-
 @interface ViewController : UIViewController <UITextFieldDelegate>
 
 
